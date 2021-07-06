@@ -8,7 +8,9 @@ import com.example.roomdemo.databinding.ListItemBinding
 import com.example.roomdemo.db.Subscribers
 
 
-class MyRecyclerViewAdapter(private val subscribersList:List<Subscribers>):RecyclerView.Adapter<MyViewHolder>() {
+class MyRecyclerViewAdapter(private val subscribersList:List<Subscribers>
+    ,private val clickListener:(Subscribers)->Unit):
+    RecyclerView.Adapter<MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
      val layoutInflater = LayoutInflater.from(parent.context)
      val binding = DataBindingUtil.inflate<ListItemBinding>(layoutInflater,R.layout.list_item,parent,false)
@@ -16,7 +18,7 @@ class MyRecyclerViewAdapter(private val subscribersList:List<Subscribers>):Recyc
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(subscribersList[position])
+        holder.bind(subscribersList[position],clickListener)
     }
 
     override fun getItemCount(): Int {
@@ -24,8 +26,11 @@ class MyRecyclerViewAdapter(private val subscribersList:List<Subscribers>):Recyc
     }
 }
 class MyViewHolder(val binding:ListItemBinding):RecyclerView.ViewHolder(binding.root){
-    fun bind(subscriber: Subscribers){
+    fun bind(subscriber: Subscribers,clickListener:(Subscribers)->Unit){
         binding.nameTextView.text = subscriber.name
         binding.emailTextView.text = subscriber.email
+        binding.listItemLayout.setOnClickListener {
+            clickListener(subscriber)
+        }
     }
 }

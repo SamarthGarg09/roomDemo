@@ -37,8 +37,11 @@ class MainActivity : AppCompatActivity() {
      private fun displaySubscribersList(){
         subscriberViewModel.subscribers.observe(this, {
         Log.i("MyTag",it.toString())
-            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(it)
+            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(it,{selectedListItem->listItemClicked(selectedListItem)})
         })
+    }
+    private fun listItemClicked(subscribers: Subscribers){
+        Log.i("MyTag","subscriber name is ${subscribers.name} with email id as ${subscribers.email}")
     }
 
 }
