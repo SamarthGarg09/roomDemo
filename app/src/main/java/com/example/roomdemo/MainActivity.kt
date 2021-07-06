@@ -2,6 +2,7 @@ package com.example.roomdemo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -27,22 +28,17 @@ class MainActivity : AppCompatActivity() {
         binding.myViewModel = subscriberViewModel
         initRecyclerView()
     }
+
     private fun initRecyclerView(){
         binding.subscriberRecyclerView.layoutManager = LinearLayoutManager(this)
         displaySubscribersList()
     }
 
-    private fun displaySubscribersList(){
-        subscriberViewModel.subscribers.observe(this, Observer {
-            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(it) { selectedListItem: Subscribers ->
-                listItemClicked(
-                    selectedListItem
-                )
-            }
+     private fun displaySubscribersList(){
+        subscriberViewModel.subscribers.observe(this, {
+        Log.i("MyTag",it.toString())
+            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(it)
         })
     }
-    private fun listItemClicked(subscribers: Subscribers){
-        Toast.makeText(this,"selected item is ${subscribers.name}",Toast.LENGTH_LONG).show()
-        subscriberViewModel.initUpdateOrDelete(subscribers)
-    }
+
 }
