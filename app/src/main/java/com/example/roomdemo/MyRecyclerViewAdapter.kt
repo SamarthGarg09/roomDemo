@@ -8,9 +8,10 @@ import com.example.roomdemo.databinding.ListItemBinding
 import com.example.roomdemo.db.Subscribers
 
 
-class MyRecyclerViewAdapter(private val subscribersList:List<Subscribers>
-    ,private val clickListener:(Subscribers)->Unit):
+class MyRecyclerViewAdapter(private val clickListener:(Subscribers)->Unit):
     RecyclerView.Adapter<MyViewHolder>() {
+    private val subscribersList = ArrayList<Subscribers>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
      val layoutInflater = LayoutInflater.from(parent.context)
      val binding = DataBindingUtil.inflate<ListItemBinding>(layoutInflater,R.layout.list_item,parent,false)
@@ -23,6 +24,10 @@ class MyRecyclerViewAdapter(private val subscribersList:List<Subscribers>
 
     override fun getItemCount(): Int {
         return subscribersList.size
+    }
+    fun setList(subscribers:List<Subscribers>){
+        subscribersList.clear()
+        subscribersList.addAll(subscribers)
     }
 }
 class MyViewHolder(val binding:ListItemBinding):RecyclerView.ViewHolder(binding.root){

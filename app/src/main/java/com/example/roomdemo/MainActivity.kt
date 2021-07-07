@@ -15,6 +15,7 @@ import com.example.roomdemo.db.Subscribers
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var subscriberViewModel : SubscriberViewModel
+    private lateinit var adapter: MyRecyclerViewAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
@@ -36,17 +37,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView(){
         binding.subscriberRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = MyRecyclerViewAdapter { selectedListItem ->
+            listItemClicked(
+                selectedListItem
+            )
+        }
+        binding.subscriberRecyclerView.adapter = adapter
         displaySubscribersList()
     }
 
      private fun displaySubscribersList(){
         subscriberViewModel.subscribers.observe(this, { newValue->
         Log.i("MyTag",newValue.toString())
-            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(newValue) { selectedListItem ->
-                listItemClicked(
-                    selectedListItem
-                )
-            }
+            adapter.setList(newValue)
+            adapter.notifyDataSetChanged()
         })
     }
     private fun listItemClicked(subscribers: Subscribers){
