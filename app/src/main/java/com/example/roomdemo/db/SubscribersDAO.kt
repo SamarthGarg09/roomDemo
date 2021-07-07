@@ -6,11 +6,11 @@ import androidx.room.*
 interface SubscribersDAO{
 
     @Insert
-    suspend fun insertSubscribers(subscribers: Subscribers)
+    suspend fun insertSubscribers(subscribers: Subscribers):Long
     @Update
-    suspend fun updateSubscribers(subscribers: Subscribers)
+    suspend fun updateSubscribers(subscribers: Subscribers):Int
     @Delete
-    suspend fun deleteSubs(subscribers: Subscribers)
+    suspend fun deleteSubs(subscribers: Subscribers):Int
     @Query("DELETE FROM subscribers_data_table")
     suspend fun deleteAll()
     @Query("SELECT * FROM subscribers_data_table")
