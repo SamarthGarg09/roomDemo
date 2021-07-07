@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun listItemClicked(subscribers: Subscribers){
         Log.i("MyTag","subscriber name is ${subscribers.name} with email id as ${subscribers.email}")
+        subscriberViewModel.initUpdateAndDelete(subscribers)
     }
 
 }
