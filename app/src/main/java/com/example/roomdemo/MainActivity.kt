@@ -27,6 +27,12 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.myViewModel = subscriberViewModel
         initRecyclerView()
+
+        subscriberViewModel.message.observe(this, {
+            it.getContentIfNotHandled()?.let {
+                Toast.makeText(this,it,Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     private fun initRecyclerView(){
